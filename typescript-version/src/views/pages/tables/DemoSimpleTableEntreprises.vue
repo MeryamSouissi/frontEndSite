@@ -2,7 +2,7 @@
   <VTable>
     <thead>
       <div>       
-        <RouterLink to="../pages/form-layouts/DemoFormLayoutMultipleColumn" class="btn btn-primary"> <i class="fa-solid fa-plus"></i>  Ajouter Entreprise</RouterLink>
+        <RouterLink to="../AjouterEntreprise" class="btn btn-primary"> <i class="fa-solid fa-plus"></i>  Ajouter Entreprise</RouterLink>
         <br><br></div>
       <tr><th class="text-uppercase">ID</th>
         <th>Nom</th>

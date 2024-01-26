@@ -1,6 +1,7 @@
 <script setup>
  import { ref } from 'vue';
-  
+  import {useRouter} from 'vue-router';
+  const router=useRouter();
   const nouvId = ref('');
     const nouvNom = ref('');
     const nouvHeure = ref('');
@@ -20,12 +21,16 @@ function ajouterEntreprise() {
             email: nouvEmail.value,
             numeroDirecteur: nouvNumeroDirecteur.value,
           }),
-        });
+        })
+        .then(() => {
+    router.push({ path: '/tables', forceReload: true });
+  });
       }
 </script>
 
 <template>
   <VForm @submit.prevent="() => {}">
+ 
     <VRow>
       <!-- 👉 First Name -->
       <VCol
@@ -111,7 +116,7 @@ function ajouterEntreprise() {
         cols="12"
         class="d-flex gap-4"
       >
-        <VBtn type="submit">
+        <VBtn type="submit" @click="ajouterEntreprise">
           Soumettre
         </VBtn>
 

@@ -9,7 +9,7 @@ import DemoSimpleTableTheme from '@/views/pages/tables/DemoSimpleTableTheme.vue'
 <template>
   <VRow>
     <VCol cols="12">
-      <VCard title="Table des Entreprises"> 
+      <VCard title="Sociétés opérant dans la Zone Franche"> 
         <DemoSimpleTableEntreprises />
       </VCard>
     </VCol>

@@ -11,9 +11,9 @@ const activeTab = ref(route.params.tab)
 
 // tabs
 const tabs = [
-  { title: 'Account', icon: 'bx-user', tab: 'account' },
-  { title: 'Security', icon: 'bx-lock-open', tab: 'security' },
-  { title: 'Notifications', icon: 'bx-bell', tab: 'notification' },
+  { title: 'Informations Entreprise', icon: 'bx-user', tab: 'Informations Entreprise' },
+  { title: 'Les employees de l entreprise', icon: 'bx-lock-open', tab: 'Employees de l entreprise' },
+  { title: 'Historiques des demandes d accès', icon: 'bx-bell', tab: 'Historiques des demandes d accès' },
 ]
 </script>
 
@@ -43,17 +43,17 @@ const tabs = [
       class="mt-5 disable-tab-transition"
     >
       <!-- Account -->
-      <VWindowItem value="account">
+      <VWindowItem value="Informations Entreprise">
         <AccountSettingsAccount />
       </VWindowItem>
 
       <!-- Security -->
-      <VWindowItem value="security">
+      <VWindowItem value="Employees de l entreprise">
         <AccountSettingsSecurity />
       </VWindowItem>
 
       <!-- Notification -->
-      <VWindowItem value="notification">
+      <VWindowItem value="Historiques des demandes d accès">
         <AccountSettingsNotification />
       </VWindowItem>
     </VWindow>

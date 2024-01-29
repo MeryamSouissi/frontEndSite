@@ -33,6 +33,12 @@ const router = createRouter({
           component: () => import('../pages/tables.vue'),
         },
         {
+          path: 'AjouterEntreprise/:type',
+          name: 'addForm',
+          props: true,
+          component: () => import('../pages/AjouterEntreprise.vue'),
+        },
+        {
           path: 'AjouterEntreprise',
           component: () => import('../pages/AjouterEntreprise.vue'),
         },

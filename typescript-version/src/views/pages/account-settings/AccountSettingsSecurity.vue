@@ -1,191 +1,218 @@
-<script lang="ts" setup>
-import { VDataTable } from 'vuetify/labs/VDataTable'
+<template>
+   <VTable>
+    <thead>
+      <div>
+        <RouterLink :to="{ name: 'addForm', params: { type: 'employee' }}"  class="btn btn-primary"><i class="fa-solid fa-plus"></i> Ajouter Employee </RouterLink>        <br><br>
+      </div>
+      <tr>
+        <th class="text-uppercase">ID</th>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Numero Telephone</th>
+        <th>Numero CIN</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="employee in tableEmployee" :key="employee.id">
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.nom }}</td>
+        <td>{{ employee.prenom }}</td>
+        <td>{{ employee.numTel }}</td>
+        <td>{{ employee.cin }}</td>
+        <td>{{ employee.email }}</td>
+        <td>
+          <VBtn color="primary" variant="tonal" @click="openModifierPrompt(employee)">
+            <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+          </VBtn>
+          <VBtn color="primary" variant="tonal" @click="openDeletePrompt(employee.id)">
+            <i class="fa-solid fa-trash"></i>
+          </VBtn>
+        </td>
+      </tr>
+    </tbody>
+  </VTable>
+  <!-- Prompt for modifying employee -->
+  <div v-if="isModifierPromptOpen" class="modifier-prompt">
+    <div>
+      <label>ID:</label>
+      <input type="text" v-model="employeeToModify.id" disabled />
+    </div>
+    <div>
+      <label>Nom:</label>
+      <input type="text" v-model="employeeToModify.nom" />
+    </div>
+    <div>
+      <label>Prenom:</label>
+      <input type="text" v-model="employeeToModify.prenom" />
+    </div>
+    <div>
+      <label>Numero Telephone:</label>
+      <input type="text" v-model="employeeToModify.numTel" />
+    </div>
+    <div>
+      <label>Numero CIN:</label>
+      <input type="text" v-model="employeeToModify.cin" />
+    </div>
+    <div>
+      <label>Email:</label>
+      <input type="text" v-model="employeeToModify.email" />
+    </div>
+    <div>
+      <VBtn color="primary" variant="tonal" @click="modifierEmployee()"> Modifier </VBtn>
+      <VBtn color="primary" variant="tonal" @click="closeModifierPrompt()" > Annuler </VBtn>
+    </div>
+  </div>
+  <!-- Prompt for confirming delete -->
+  <div v-if="isDeletePromptOpen" class="modifier-prompt">
+    <div>
+      <p>Êtes-vous sûr de vouloir supprimer cet employé ?</p>
+      <VBtn color="primary" variant="tonal" @click="supprimerConfirmed()"> Confirmer </VBtn>
+      <VBtn color="primary" variant="tonal" @click="closeDeletePrompt()"> Annuler </VBtn>
+    </div>
+  </div>
+</template>
 
-const isCurrentPasswordVisible = ref(false)
-const isNewPasswordVisible = ref(false)
-const isConfirmPasswordVisible = ref(false)
-const currentPassword = ref('12345678')
-const newPassword = ref('87654321')
-const confirmPassword = ref('87654321')
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-const passwordRequirements = [
-  'Minimum 8 characters long - the more, the better',
-  'At least one lowercase character',
-  'At least one number, symbol, or whitespace character',
-]
+const tableEmployee = ref([]);
+const router = useRouter();
+const isModifierPromptOpen = ref(false);
+const isDeletePromptOpen = ref(false);
+const employeeToModify = ref({});
 
-const serverKeys = [
-  {
-    name: 'Server Key 1',
-    key: '23eaf7f0-f4f7-495e-8b86-fad3261282ac',
-    createdOn: '28 Apr 2021, 18:20 GTM+4:10',
-    permission: 'Full Access',
-  },
-  {
-    name: 'Server Key 2',
-    key: 'bb98e571-a2e2-4de8-90a9-2e231b5e99',
-    createdOn: '12 Feb 2021, 10:30 GTM+2:30',
-    permission: 'Read Only',
-  },
-  {
-    name: 'Server Key 3',
-    key: '2e915e59-3105-47f2-8838-6e46bf83b711',
-    createdOn: '28 Dec 2020, 12:21 GTM+4:10',
-    permission: 'Full Access',
-  },
-]
+function loadData() {
+  // Fetch employees data
+  fetch("https://localhost:7012/api/Employee")
+    .then(response => response.json())
+    .then(data => (tableEmployee.value = data))
+    .catch(error => console.error('Error loading employees data:', error));
+}
 
-const recentDevicesHeaders = [
-  { title: 'BROWSER', key: 'browser' },
-  { title: 'DEVICE', key: 'device' },
-  { title: 'LOCATION', key: 'location' },
-  { title: 'RECENT ACTIVITY', key: 'recentActivity' },
-]
+function openModifierPrompt(employee) {
+  employeeToModify.value = { ...employee };
+  isModifierPromptOpen.value = true;
+}
 
-const recentDevices = [
-  {
-    browser: 'Chrome on Windows',
-    device: 'HP Spectre 360',
-    location: 'New York, NY',
-    recentActivity: '28 Apr 2022, 18:20',
-    deviceIcon: { icon: 'bxl-windows', color: 'primary' },
-  },
-  {
-    browser: 'Chrome on iPhone',
-    device: 'iPhone 12x',
-    location: 'Los Angeles, CA',
-    recentActivity: '20 Apr 2022, 10:20',
-    deviceIcon: { icon: 'bx-mobile', color: 'error' },
-  },
-  {
-    browser: 'Chrome on Android',
-    device: 'Oneplus 9 Pro',
-    location: 'San Francisco, CA',
-    recentActivity: '16 Apr 2022, 04:20',
-    deviceIcon: { icon: 'bxl-android', color: 'success' },
-  },
-  {
-    browser: 'Chrome on MacOS',
-    device: 'Apple iMac',
-    location: 'New York, NY',
-    recentActivity: '28 Apr 2022, 18:20',
-    deviceIcon: { icon: 'bxl-apple', color: 'secondary' },
-  },
-  {
-    browser: 'Chrome on Windows',
-    device: 'HP Spectre 360',
-    location: 'Los Angeles, CA',
-    recentActivity: '20 Apr 2022, 10:20',
-    deviceIcon: { icon: 'bxl-windows', color: 'primary' },
-  },
-  {
-    browser: 'Chrome on Android',
-    device: 'Oneplus 9 Pro',
-    location: 'San Francisco, CA',
-    recentActivity: '16 Apr 2022, 04:20',
-    deviceIcon: { icon: 'bxl-android', color: 'success' },
-  },
-]
+function closeModifierPrompt() {
+  isModifierPromptOpen.value = false;
+}
+
+function openDeletePrompt(employeeId) {
+  // Store the ID of the employee to delete in a variable
+  employeeToModify.value.idToDelete = employeeId;
+  isDeletePromptOpen.value = true;
+}
+
+function closeDeletePrompt() {
+  isDeletePromptOpen.value = false;
+}
+
+async function supprimerConfirmed() {
+  // Get the ID of the employee to delete
+  const employeeIdToDelete = employeeToModify.value.idToDelete;
+
+  // Delete the employee
+  const response = await fetch("https://localhost:7012/api/Employee/" + employeeIdToDelete, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.ok) {
+    // Close the popup after successful deletion
+    closeDeletePrompt();
+    // Reload data after deletion
+    loadData();
+  } else {
+    // Handle error if deletion fails
+    console.error('Error deleting employee:', response.status);
+  }
+}
+
+onMounted(loadData);
 </script>
 
-<template>
-  <VRow>
-    <!-- SECTION: Change Password -->
-    <VCol cols="12">
-      <VCard title="Change Password">
-        <VForm>
-          <VCardText>
-            <!-- 👉 Current Password -->
-            <VRow>
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <!-- 👉 current password -->
-                <VTextField
-                  v-model="currentPassword"
-                  :type="isCurrentPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isCurrentPasswordVisible ? 'bx-hide' : 'bx-show'"
-                  label="Current Password"
-                  placeholder="············"
-                  @click:append-inner="isCurrentPasswordVisible = !isCurrentPasswordVisible"
-                />
-              </VCol>
-            </VRow>
+<style scoped>
+/* Styles for the modification prompt container and its elements */
+.modifier-prompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px;
+  border: 1px solid #3498db;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 10px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
 
-            <!-- 👉 New Password -->
-            <VRow>
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <!-- 👉 new password -->
-                <VTextField
-                  v-model="newPassword"
-                  :type="isNewPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isNewPasswordVisible ? 'bx-hide' : 'bx-show'"
-                  label="New Password"
-                  placeholder="············"
-                  @click:append-inner="isNewPasswordVisible = !isNewPasswordVisible"
-                />
-              </VCol>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <!-- 👉 confirm password -->
-                <VTextField
-                  v-model="confirmPassword"
-                  :type="isConfirmPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isConfirmPasswordVisible ? 'bx-hide' : 'bx-show'"
-                  label="Confirm New Password"
-                  placeholder="············"
-                  @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
-                />
-              </VCol>
-            </VRow>
-          </VCardText>
+/* Styles for the labels of the modification form */
+.modifier-prompt label {
+  display: block;
+  margin-bottom: 10px;
+  color: #3498db;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
 
-          <!-- 👉 Password Requirements -->
-          <VCardText>
-            <p class="text-base font-weight-medium mt-2">
-              Password Requirements:
-            </p>
+/* Styles for the input fields of the modification form */
+.modifier-prompt input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease-in-out;
+}
 
-            <ul class="d-flex flex-column gap-y-3">
-              <li
-                v-for="item in passwordRequirements"
-                :key="item"
-                class="d-flex"
-              >
-                <div>
-                  <VIcon
-                    size="7"
-                    icon="bxs-circle"
-                    class="me-3"
-                  />
-                </div>
-                <span class="font-weight-medium">{{ item }}</span>
-              </li>
-            </ul>
-          </VCardText>
+/* Styles for the buttons of the modification form */
+.modifier-prompt button {
+  padding: 12px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
 
-          <!-- 👉 Action Buttons -->
-          <VCardText class="d-flex flex-wrap gap-4">
-            <VBtn>Save changes</VBtn>
+/* Styles for the primary button */
+.modifier-prompt .btn-primary {
+  background-color: #3498db;
+  color: #fff;
+}
 
-            <VBtn
-              type="reset"
-              color="secondary"
-              variant="tonal"
-            >
-              Reset
-            </VBtn>
-          </VCardText>
-        </VForm>
-      </VCard>
-    </VCol>
-   
-  </VRow>
-</template>
+/* Styles for the cancel button */
+.modifier-prompt .btn-danger {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+/* Hover styles for the buttons */
+.modifier-prompt button:hover {
+  background-color: #2c3e50;
+  color: #fff;
+  transform: scale(1.05);
+}
+</style>

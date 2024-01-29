@@ -1,14 +1,29 @@
 <script setup>
  import { ref } from 'vue';
   import {useRouter} from 'vue-router';
-  const router=useRouter();
-  const nouvId = ref('');
-    const nouvNom = ref('');
-    const nouvHeure = ref('');
-    const nouvEmail = ref('');
-    const nouvNumeroDirecteur = ref('');
+const router = useRouter();
+const nouvId = ref('');
+const nouvNom = ref('');
+const nouvHeure = ref('');
+const nouvEmail = ref('');
+const nouvNumeroDirecteur = ref('');
+const nouvDescription = ref('');
+const erreurId = ref('');
+const erreurNom = ref('');
+const erreurHeure = ref('');
+const erreurEmail = ref('');
+const erreurNumeroDirecteur = ref('');
+const erreurDescription = ref('');
 
 function ajouterEntreprise() {
+  if (nouvId.value === '') erreurId.value = 'Veuillez remplir ce champ !';
+  if (nouvNom.value === '') erreurNom.value = 'Veuillez remplir ce champ !';
+  if (nouvHeure.value === '') erreurHeure.value = 'Veuillez remplir ce champ !';
+  if (nouvEmail.value === '') erreurEmail.value = 'Veuillez remplir ce champ !';
+  if (nouvNumeroDirecteur.value === '') erreurNumeroDirecteur.value = 'Veuillez remplir ce champ !';
+  if (nouvDescription.value === '') erreurDescription.value = 'Veuillez remplir ce champ !';
+
+  if (!(erreurId.value || erreurNom.value || erreurHeure.value || erreurEmail.value || erreurNumeroDirecteur.value || description.value)) {
         fetch("https://localhost:7012/api/Entreprise", {
           method: 'POST',
           headers: {
@@ -20,12 +35,13 @@ function ajouterEntreprise() {
             heureDeTravail: nouvHeure.value,
             email: nouvEmail.value,
             numeroDirecteur: nouvNumeroDirecteur.value,
+            description: nouvDescription.value,
           }),
         })
-        .then(() => {
-    router.push({ path: '/tables', forceReload: true });
-  });
-      }
+        .then(() => { router.push({ path: '/tables', forceReload: true }); 
+      });
+      }}
+      
 </script>
 
 <template>
@@ -33,7 +49,6 @@ function ajouterEntreprise() {
  
     <VRow>
       <!-- 👉 First Name -->
-      <!--rahou y3aned-->
       <VCol
         cols="12"
         md="6"
@@ -42,7 +57,9 @@ function ajouterEntreprise() {
           v-model="nouvId"
           label="ID"
           placeholder="ID"
+          
         />
+        <span class="error-message">{{ erreurId }}</span>
       </VCol>
 
       <!-- 👉 Last Name -->
@@ -66,7 +83,9 @@ function ajouterEntreprise() {
           v-model="nouvNom"
           label=" Le Nom"
           placeholder="Nom"
+          
         />
+        <span class="error-message">{{ erreurNom }}</span>
       </VCol>
 
       <!-- 👉  -->
@@ -78,7 +97,9 @@ function ajouterEntreprise() {
           v-model="nouvHeure"
           label="Heures de Travail"
           placeholder="Heures de Travail"
+          
         />
+        <span class="error-message">{{ erreurHeure }}</span>
       </VCol>
 
       <!-- 👉 Country -->
@@ -90,7 +111,9 @@ function ajouterEntreprise() {
           v-model="nouvEmail"
           label="Email"
           placeholder="Email"
+          
         />
+        <span class="error-message">{{ erreurEmail }}</span>
       </VCol>
 
       <!-- 👉 Company -->
@@ -102,21 +125,31 @@ function ajouterEntreprise() {
           v-model="nouvNumeroDirecteur"
           label="Numero Directeur"
           placeholder="Numero Directeur"
+          
         />
+        <span class="error-message">{{ erreurNumeroDirecteur }}</span>
       </VCol>
 
-      <!-- 👉 Remember me -->
-    <!--  <VCol cols="12">
-        <VCheckbox
-          v-model="checkbox"
-          label="Remember me"
+      <!-- 👉 Company -->
+      <VCol
+        cols="12"
+        md="6"
+      >
+        <VTextField
+          v-model="nouvDescription"
+          label="Description"
+          placeholder="Description"
+          
         />
-      </VCol>-->
+        <span class="error-message">{{ erreurDescription }}</span>
+      </VCol>
+
 
       <VCol
         cols="12"
         class="d-flex gap-4"
       >
+  
         <VBtn type="submit" @click="ajouterEntreprise">
           Soumettre
         </VBtn>
@@ -132,3 +165,9 @@ function ajouterEntreprise() {
     </VRow>
   </VForm>
 </template>
+<style>
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+</style>

@@ -4,19 +4,7 @@
     <span class="d-flex align-center">
       &copy;
       {{ new Date().getFullYear() }}
-      Made With
-      <VIcon
-        icon="bx-heart"
-        color="error"
-        size="1.25rem"
-        class="mx-1"
-      />
-      By <a
-        href="https://themeselection.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-primary ms-1"
-      >ThemeSelection</a>
+      Conçu pour renforcer la sécurité d'accès à la zone franche
     </span>
   </div>
 </template>

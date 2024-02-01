@@ -1,6 +1,6 @@
 <script setup>
- import { ref } from 'vue';
-  import {useRouter} from 'vue-router';
+import { ref } from 'vue';
+import {useRouter} from 'vue-router';
 const router = useRouter();
 const nouvId = ref('');
 const nouvNom = ref('');
@@ -41,7 +41,26 @@ function ajouterEntreprise() {
         .then(() => { router.push({ path: '/tables', forceReload: true }); 
       });
       }}
-      
+      function resetForm() {
+  // Réinitialisez vos variables ref ici
+  nouvId.value = '';
+  nouvNom.value = '';
+  nouvHeure.value = '';
+  nouvEmail.value = '';
+  nouvNumeroDirecteur.value = '';
+  nouvDescription.value = '';
+  
+  // Réinitialisez vos messages d'erreur ici
+  erreurId.value = '';
+  erreurNom.value = '';
+  erreurHeure.value = '';
+  erreurEmail.value = '';
+  erreurNumeroDirecteur.value = '';
+  erreurDescription.value = '';
+
+  // Revenez à la page contenant le tableau
+  router.push({ path: '/tables', forceReload: true });
+} 
 </script>
 
 <template>
@@ -158,6 +177,8 @@ function ajouterEntreprise() {
           type="reset"
           color="secondary"
           variant="tonal"
+          @click="resetForm"
+
         >
         Réinitialiser
         </VBtn>

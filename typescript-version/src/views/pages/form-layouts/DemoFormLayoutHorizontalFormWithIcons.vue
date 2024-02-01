@@ -43,6 +43,26 @@
     router.push({ path: '/account-settings', forceReload: true });
   });
 }}
+function resetForm() {
+  // Réinitialisez vos variables ref ici
+  nouvId.value = '';
+  nouvNom.value = '';
+  nouvPrenom.value = '';
+  nouvNumTel.value = '';
+  nouvNumCIN.value = '';
+  nouvEmail.value = '';
+  
+  // Réinitialisez vos messages d'erreur ici
+  erreurID.value = '';
+  erreurNom.value = '';
+  erreurPrenom.value = '';
+  erreurNumeroTelephone.value = '';
+  erreurNumeroCIN.value = '';
+  erreurEmail.value = '';
+
+  // Revenez à la page contenant le tableau
+  router.push({ path: '/account-settings', forceReload: true });
+}
 </script>
 
 <template>
@@ -142,6 +162,8 @@
           type="reset"
           color="secondary"
           variant="tonal"
+          @click="resetForm"
+
         >
         Réinitialiser
         </VBtn>

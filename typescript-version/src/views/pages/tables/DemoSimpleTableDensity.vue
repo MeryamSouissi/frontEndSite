@@ -1,86 +1,46 @@
-<script setup lang="ts">
-const desserts = [
-  {
-    dessert: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Ice cream sandwich',
-    calories: 237,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Eclair',
-    calories: 262,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Cupcake',
-    calories: 305,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Gingerbread',
-    calories: 356,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-]
-</script>
-
 <template>
-  <VTable density="compact">
+  <VTable>
     <thead>
-      <tr>
-        <th class="text-uppercase">
-          Desserts (100g Servings)
-        </th>
-        <th>
-          calories
-        </th>
-        <th>
-          Fat(g)
-        </th>
-        <th>
-          Carbs(g)
-        </th>
-        <th>
-          protein(g)
-        </th>
+      <tr><th class="text-uppercase">ID</th>
+        <th>Nom du Visiteur</th>
+        <th>CIN du Visiteur</th>
+        <th>Email du Visiteur</th>
+        <th>Date d'Entrée</th>
+        <th>Raison de la Visite</th>
+        <th>Action</th>
       </tr>
     </thead>
-
     <tbody>
-      <tr
-        v-for="item in desserts"
-        :key="item.dessert"
-      >
-        <td>
-          {{ item.dessert }}
-        </td>
-        <td class="text-center">
-          {{ item.calories }}
-        </td>
-        <td class="text-center">
-          {{ item.fat }}
-        </td>
-        <td class="text-center">
-          {{ item.carbs }}
-        </td>
-        <td class="text-center">
-          {{ item.protein }}
-        </td>
-      </tr>
-    </tbody>
+            <tr v-for="informationVisiteur in tableInformationVisiteurs" :key="informationVisiteur.id">
+              <td>{{ informationVisiteur.id }}</td>
+              <td>{{ informationVisiteur.nom }}</td>
+              <td>{{ informationVisiteur.cin}}</td>
+              <td>{{ informationVisiteur.email }}</td>
+              <td>{{ informationVisiteur.dateEntree }}</td>
+              <td>{{ informationVisiteur.raisonViste }}</td>
+              <td><VBtn color="primary" variant="tonal">{{informationVisiteur.etat}}</VBtn></td>
+            </tr>
+        </tbody>
   </VTable>
 </template>
+
+
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+  const tableInformationVisiteurs = ref([]);
+  const router = useRouter();
+
+
+  function loadData() {
+    fetch("https://localhost:7012/api/Demande")
+      .then(response => response.json())
+      .then(data => tableInformationVisiteurs.value = data)
+      .catch(error => console.error('Error loading data:', error));
+  }
+  onMounted(() => {
+  loadData();
+});
+</script>

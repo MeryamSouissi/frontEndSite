@@ -33,13 +33,11 @@ const isPasswordVisible = ref(false)
         </VCardTitle>
       </VCardItem>
 
-      <VCardText class="pt-2">
+      <VCardText class="pt-2 text-center">
         <h5 class="text-h5 mb-1">
-          Adventure starts here 🚀
+          Système d'accès à la zone Franche
         </h5>
-        <p class="mb-0">
-          Make your app management easy and fun!
-        </p>
+        
       </VCardText>
 
       <VCardText>
@@ -50,8 +48,8 @@ const isPasswordVisible = ref(false)
               <VTextField
                 v-model="form.username"
                 autofocus
-                label="Username"
-                placeholder="Johndoe"
+                label="Nom"
+                placeholder="Votre Nom"
               />
             </VCol>
             <!-- email -->
@@ -59,7 +57,7 @@ const isPasswordVisible = ref(false)
               <VTextField
                 v-model="form.email"
                 label="Email"
-                placeholder="johndoe@email.com"
+                placeholder="Votre Email"
                 type="email"
               />
             </VCol>
@@ -68,7 +66,7 @@ const isPasswordVisible = ref(false)
             <VCol cols="12">
               <VTextField
                 v-model="form.password"
-                label="Password"
+                label="Mot de passe"
                 placeholder="············"
                 :type="isPasswordVisible ? 'text' : 'password'"
                 :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
@@ -84,11 +82,11 @@ const isPasswordVisible = ref(false)
                   for="privacy-policy"
                   style="opacity: 1;"
                 >
-                  <span class="me-1">I agree to</span>
+                  <span class="me-1">Je suis d'accord pour</span>
                   <a
                     href="javascript:void(0)"
                     class="text-primary"
-                  >privacy policy & terms</a>
+                  >politique de confidentialité et conditions</a>
                 </VLabel>
               </div>
 
@@ -96,7 +94,7 @@ const isPasswordVisible = ref(false)
                 block
                 type="submit"
               >
-                Sign up
+              S'inscrire
               </VBtn>
             </VCol>
 
@@ -105,31 +103,31 @@ const isPasswordVisible = ref(false)
               cols="12"
               class="text-center text-base"
             >
-              <span>Already have an account?</span>
+              <span>Vous avez déjà un compte?</span>
               <RouterLink
                 class="text-primary ms-2"
                 to="/login"
               >
-                Sign in instead
+              Connectez-vous plutôt
               </RouterLink>
             </VCol>
 
-            <VCol
+       <!--    <VCol
               cols="12"
               class="d-flex align-center"
             >
               <VDivider />
               <span class="mx-4">or</span>
               <VDivider />
-            </VCol>
+            </VCol>--> 
 
-            <!-- auth providers -->
+            <!-- auth providers 
             <VCol
               cols="12"
               class="text-center"
             >
               <AuthProvider />
-            </VCol>
+            </VCol>-->
           </VRow>
         </VForm>
       </VCardText>

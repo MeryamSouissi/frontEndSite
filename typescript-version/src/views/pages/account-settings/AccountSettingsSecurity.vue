@@ -92,15 +92,36 @@ function loadData() {
     .catch(error => console.error('Error loading employees data:', error));
 }
 
+
 function openModifierPrompt(employee) {
   employeeToModify.value = { ...employee };
   isModifierPromptOpen.value = true;
-}
+ }
 
-function closeModifierPrompt() {
+ function closeModifierPrompt() {
   isModifierPromptOpen.value = false;
-}
+ }
 
+function modifierEmployee() {
+  // Update the employee details using employeeToModify
+  fetch("https://localhost:7012/api/Employee/" + employeeToModify.value.id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: employeeToModify.value.id,
+      nom: employeeToModify.value.nom,
+      prenom: employeeToModify.value.prenom,
+      numTel: employeeToModify.value.numTel,
+      cin: employeeToModify.value.cin,
+      email: employeeToModify.value.email,
+    }),
+  }).then(() => {
+    closeModifierPrompt();
+    loadData(); // Reload data after modification
+  });
+}
 function openDeletePrompt(employeeId) {
   // Store the ID of the employee to delete in a variable
   employeeToModify.value.idToDelete = employeeId;

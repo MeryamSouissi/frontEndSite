@@ -14,6 +14,8 @@ const router = createRouter({
         },
         {
           path: 'account-settings',
+  
+
           component: () => import('../pages/account-settings.vue'),
         },
         {
@@ -41,6 +43,10 @@ const router = createRouter({
         {
           path: 'AjouterEntreprise',
           component: () => import('../pages/AjouterEntreprise.vue'),
+        },
+        {
+          path: 'GérerDemandes',
+          component: () => import('../pages/GérerDemandes.vue'),
         },
       ],
     },

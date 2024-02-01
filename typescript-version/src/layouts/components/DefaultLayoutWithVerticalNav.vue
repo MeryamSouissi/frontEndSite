@@ -107,41 +107,41 @@ const upgradeBanner = computed(() => {
           to: '/register',
         }"
       />
-   <!-- <VerticalNavLink
+   <VerticalNavLink
         :item="{
-          title: 'Erreur',
+          title: 'Gérer Demandes',
           icon: 'bx-info-circle',
-          to: '/no-existence',
+          to: '/GérerDemandes',
         }"
-      />-->  
+      />
 
       <!-- 👉 User Interface 
       <VerticalNavSectionTitle
         :item="{
           heading: 'User Interface',
         }"
-      />
+      />-->
       <VerticalNavLink
         :item="{
-          title: 'Typography',
+          title: 'Demandes Visiteurs',
           icon: 'mdi-alpha-t-box-outline',
           to: '/typography',
         }"
-      />-->
-      <!--<VerticalNavLink
+      />
+      <VerticalNavLink
         :item="{
-          title: 'Icons',
+          title: 'Visiteurs',
           icon: 'bx-show',
           to: '/icons',
         }"
       />
       <VerticalNavLink
         :item="{
-          title: 'Cards',
+          title: 'Demande Accès',
           icon: 'bx-credit-card',
           to: '/cards',
         }"
-      />-->
+      />
       <VerticalNavLink
         :item="{
           title: 'Tables',

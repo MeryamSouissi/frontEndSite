@@ -1,5 +1,5 @@
 <script setup>
-import DemoSimpleTableDensity from '@/views/pages/tables/DemoSimpleTableDensity.vue'
+import DemoSimpleTableFixedHeader from '@/views/pages/tables/DemoSimpleTableFixedHeader.vue'
 
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
@@ -10,9 +10,9 @@ import { computed } from 'vue';
     <VRow>
       <VCol>
         <!-- 👉 Multiple Column -->
-        <VCard title="Les demandes d'accès des visiteurs">
+        <VCard title="Gérer Les Demandes Des Visiteurs ">
           <VCardText>
-            <DemoSimpleTableDensity />
+            <DemoSimpleTableFixedHeader />
           </VCardText>
         </VCard>
       </VCol> 

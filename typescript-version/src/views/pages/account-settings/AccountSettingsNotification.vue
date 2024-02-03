@@ -1,122 +1,49 @@
-<script lang="ts" setup>
-const recentDevices = ref(
-  [
-    {
-      type: 'New for you',
-      email: true,
-      browser: true,
-      app: true,
-    },
-    {
-      type: 'Account activity',
-      email: true,
-      browser: true,
-      app: true,
-    },
-    {
-      type: 'A new browser used to sign in',
-      email: true,
-      browser: true,
-      app: false,
-    },
-    {
-      type: 'A new device is linked',
-      email: true,
-      browser: false,
-      app: false,
-    },
-  ],
-)
-
-const selectedNotification = ref('Only when I\'m online')
-</script>
-
 <template>
-  <VCard title="Recent Devices">
-    <VCardText>
-      We need permission from your browser to show notifications.
-      <a href="javascript:void(0)">Request Permission</a>
-    </VCardText>
-
-    <VTable class="text-no-wrap">
-      <thead>
-        <tr>
-          <th scope="col">
-            Type
-          </th>
-          <th scope="col">
-            EMAIL
-          </th>
-          <th scope="col">
-            BROWSER
-          </th>
-          <th scope="col">
-            App
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="device in recentDevices"
-          :key="device.type"
-        >
-          <td>
-            {{ device.type }}
-          </td>
-          <td>
-            <VCheckbox v-model="device.email" />
-          </td>
-          <td>
-            <VCheckbox v-model="device.browser" />
-          </td>
-          <td>
-            <VCheckbox v-model="device.app" />
-          </td>
-        </tr>
-      </tbody>
-    </VTable>
-    <VDivider />
-
-    <VCardText>
-      <VForm @submit.prevent="() => {}">
-        <p class="text-base font-weight-medium">
-          When should we send you notifications?
-        </p>
-
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VSelect
-              v-model="selectedNotification"
-              mandatory
-              :items="['Only when I\'m online', 'Anytime']"
-            />
-          </VCol>
-        </VRow>
-
-        <div class="d-flex flex-wrap gap-4 mt-4">
-          <VBtn type="submit">
-            Save Changes
-          </VBtn>
-          <VBtn
-            color="secondary"
-            variant="tonal"
-            type="reset"
-          >
-            Reset
-          </VBtn>
-        </div>
-      </VForm>
-    </VCardText>
-  </VCard>
+  <VTable>
+    <thead>
+      <tr><th class="text-uppercase">ID</th>
+        <th>Nom du Visiteur</th>
+        <th>CIN du Visiteur</th>
+        <th>Email du Visiteur</th>
+        <th>Date d'Entrée</th>
+        <th>Raison de la Visite</th>
+        <th>Etat</th>
+      </tr>
+    </thead>
+    <tbody>
+            <tr v-for="demande in tableInformationVisiteurs" :key="demande.id">
+             
+                <td   v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'">{{ demande.id }}</td>
+                <td   v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'">{{ demande.visiteur.nom }}</td>
+                <td  v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'">{{ demande.visiteur.cin}}</td>
+                <td  v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'">{{ demande.visiteur.email }}</td>
+                <td  v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'">{{ demande.dateEntree }}</td>
+                <td  v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'">{{ demande.raisonViste }}</td>
+              <td  v-if="demande.etat == 'Acceptée' || demande.etat == 'Refusée'"><VBtn color="primary" variant="tonal">{{demande.etat}}</VBtn></td>
+           
+            </tr>
+          
+        </tbody>
+  </VTable>
 </template>
 
-<style lang="scss" scoped>
-.v-table {
-  th {
-    text-align: start !important;
+
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+  const tableInformationVisiteurs = ref([]);
+  const router = useRouter();
+
+
+  function loadData() {
+    fetch("https://localhost:7012/api/Demande")
+      .then(response => response.json())
+      .then(data => tableInformationVisiteurs.value = data)
+      .catch(error => console.error('Error loading data:', error));
   }
-}
-</style>
+  onMounted(() => {
+  loadData();
+});
+</script>

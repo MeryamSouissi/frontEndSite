@@ -7,18 +7,18 @@
         <th>Email du Visiteur</th>
         <th>Date d'Entrée</th>
         <th>Raison de la Visite</th>
-        <th>Action</th>
+        <th>Etat</th>
       </tr>
     </thead>
     <tbody>
-            <tr v-for="informationVisiteur in tableInformationVisiteurs" :key="informationVisiteur.id">
-              <td>{{ informationVisiteur.id }}</td>
-              <td>{{ informationVisiteur.nom }}</td>
-              <td>{{ informationVisiteur.cin}}</td>
-              <td>{{ informationVisiteur.email }}</td>
-              <td>{{ informationVisiteur.dateEntree }}</td>
-              <td>{{ informationVisiteur.raisonViste }}</td>
-              <td><VBtn color="primary" variant="tonal">{{informationVisiteur.etat}}</VBtn></td>
+            <tr v-for="demande in tableInformationVisiteurs" :key="demande.id">
+              <td>{{ demande.id }}</td>
+                <td>{{ demande.visiteur.nom }}</td>
+                <td>{{ demande.visiteur.cin}}</td>
+                <td>{{ demande.visiteur.email }}</td>
+                <td>{{ demande.dateEntree }}</td>
+                <td>{{ demande.raisonViste }}</td>
+              <td><VBtn color="primary" variant="tonal">{{demande.etat}}</VBtn></td>
             </tr>
         </tbody>
   </VTable>

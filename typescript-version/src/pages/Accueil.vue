@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import AnalyticsCongratulations from '@/views/dashboard/AnalyticsCongratulations.vue'
 import AnalyticsFinanceTabs from '@/views/dashboard/AnalyticsFinanceTab.vue'
 import AnalyticsOrderStatistics from '@/views/dashboard/AnalyticsOrderStatistics.vue'
@@ -6,11 +6,6 @@ import AnalyticsProfitReport from '@/views/dashboard/AnalyticsProfitReport.vue'
 import AnalyticsTotalRevenue from '@/views/dashboard/AnalyticsTotalRevenue.vue'
 import AnalyticsTransactions from '@/views/dashboard/AnalyticsTransactions.vue'
 
-// 👉 Images
-import chart from '@images/cards/chart-success.png'
-import card from '@images/cards/credit-card-primary.png'
-import paypal from '@images/cards/paypal-error.png'
-import wallet from '@images/cards/wallet-info.png'
 </script>
 
 <template>
@@ -28,7 +23,7 @@ import wallet from '@images/cards/wallet-info.png'
       sm="4"
     >
       <VRow>
-        <!-- 👉 Profit -->
+        <!-- 👉 Profit 
         <VCol
           cols="12"
           md="6"
@@ -41,9 +36,9 @@ import wallet from '@images/cards/wallet-info.png'
               change: 72.80,
             }"
           />
-        </VCol>
+        </VCol>-->
 
-        <!-- 👉 Sales -->
+        <!-- 👉 Sales 
         <VCol
           cols="12"
           md="6"
@@ -56,7 +51,7 @@ import wallet from '@images/cards/wallet-info.png'
               change: 28.42,
             }"
           />
-        </VCol>
+        </VCol>-->
       </VRow>
     </VCol>
 
@@ -78,7 +73,7 @@ import wallet from '@images/cards/wallet-info.png'
       order-md="2"
     >
       <VRow>
-        <!-- 👉 Payments -->
+        <!-- 👉 Payments 
         <VCol
           cols="12"
           sm="6"
@@ -91,9 +86,9 @@ import wallet from '@images/cards/wallet-info.png'
               change: -14.82,
             }"
           />
-        </VCol>
+        </VCol>-->
 
-        <!-- 👉 Revenue -->
+        <!-- 👉 Revenue 
         <VCol
           cols="12"
           sm="6"
@@ -106,21 +101,21 @@ import wallet from '@images/cards/wallet-info.png'
               change: 28.14,
             }"
           />
-        </VCol>
+        </VCol>-->
       </VRow>
 
       <VRow>
-        <!-- 👉 Profit Report -->
+        <!-- 👉 Profit Report 
         <VCol
           cols="12"
           sm="12"
         >
           <AnalyticsProfitReport />
-        </VCol>
+        </VCol>-->
       </VRow>
     </VCol>
 
-    <!-- 👉 Order Statistics -->
+    <!-- 👉 Order Statistics
     <VCol
       cols="12"
       md="4"
@@ -128,9 +123,9 @@ import wallet from '@images/cards/wallet-info.png'
       order="3"
     >
       <AnalyticsOrderStatistics />
-    </VCol>
+    </VCol> -->
 
-    <!-- 👉 Tabs chart -->
+    <!-- 👉 Tabs chart
     <VCol
       cols="12"
       md="4"
@@ -138,9 +133,9 @@ import wallet from '@images/cards/wallet-info.png'
       order="3"
     >
       <AnalyticsFinanceTabs />
-    </VCol>
+    </VCol> -->
 
-    <!-- 👉 Transactions -->
+    <!-- 👉 Transactions 
     <VCol
       cols="12"
       md="4"
@@ -148,6 +143,6 @@ import wallet from '@images/cards/wallet-info.png'
       order="3"
     >
       <AnalyticsTransactions />
-    </VCol>
+    </VCol>-->
   </VRow>
 </template>

@@ -11,36 +11,14 @@
           />
           <span class="error-message">{{ nomError }}</span>
         </VCol>
-
         <VCol cols="12">
           <VTextField
-            v-model="nomVisiteur"
-            label="Nom du Visiteur"
-            placeholder="Nom du visiteur"
-            :rules="nomRules"
+            v-model="IdDemande"
+            label="ID de la demande"
+            placeholder="Id de la demande"
+            :rules="idRules"
           />
           <span class="error-message">{{ nomError }}</span>
-        </VCol>
-  
-        <VCol cols="12">
-          <VTextField
-            v-model="cinVisiteur"
-            label="CIN du Visiteur"
-            placeholder="Numéro CIN"
-            :rules="cinRules"
-          />
-          <span class="error-message">{{ cinError }}</span>
-        </VCol>
-  
-        <VCol cols="12">
-          <VTextField
-            v-model="emailVisiteur"
-            label="Email du Visiteur"
-            type="email"
-            placeholder="email@example.com"
-            :rules="emailRules"
-          />
-          <span class="error-message">{{ emailError }}</span>
         </VCol>
 
         <VCol cols="12">
@@ -80,35 +58,20 @@
   const router = useRouter(); 
   const dateEntree = ref('');
   const raisonVisite = ref('');
-  const nomVisiteur = ref('');
-  const cinVisiteur = ref('');
-  const emailVisiteur = ref('');
   const IdVisiteur = ref('');
+  const IdDemande = ref('');
 
     
   const dateRules = [
     value => !!value || 'Veuillez sélectionner une date',
   ];
   
-  const nomRules = [
-    value => !!value || 'Veuillez remplir ce champ',
-  ];
-  
-  const cinRules = [
-    value => !!value || 'Veuillez remplir ce champ',
-  ];
-  
-  const emailRules = [
-    value => !!value || 'Veuillez remplir ce champ',
-    value => /.+@.+\..+/.test(value) || 'Veuillez entrer une adresse email valide',
-  ];
-  
   const raisonRules = [
     value => !!value || 'Veuillez remplir ce champ',
   ];
+
   function submitForm() {
-    if(!(IdVisiteur.value =='' || emailVisiteur.value =='' || cinVisiteur.value =='' || nomVisiteur.value =='' || raisonVisite.value =='' )){
-      alert(IdVisiteur.value); 
+    if(!(IdVisiteur.value =='' || raisonVisite.value =='' || IdDemande.value=='')){
       fetch("https://localhost:7012/api/Demande", {
           method: 'POST',
           headers: {
@@ -116,13 +79,19 @@
           },
           
           body: JSON.stringify({
-            id: IdVisiteur.value,
-            nom: nomVisiteur.value,
-            cin: cinVisiteur.value,
-            email: emailVisiteur.value,
+            id: IdDemande.value,            
             dateEntree: dateEntree.value,
             raisonViste: raisonVisite.value,
-            etat : "en cours de traitement"
+            etat : "en cours de traitement",
+            idVisiteur: IdVisiteur.value,
+            visiteur: {
+            "id": "string",
+            "nom": "string",
+            "prenom": "string",
+            "numTel": "string",
+            "cin": "string",
+            "email": "string"
+  }
           }),
         })
         .then(() => {

@@ -41,7 +41,8 @@ function ajouterEntreprise() {
         .then(() => { router.push({ path: '/tables', forceReload: true }); 
       });
       }}
-      function resetForm() {
+
+  function resetForm() {
   // Réinitialisez vos variables ref ici
   nouvId.value = '';
   nouvNom.value = '';
@@ -75,23 +76,10 @@ function ajouterEntreprise() {
         <VTextField
           v-model="nouvId"
           label="ID"
-          placeholder="ID"
-          
+          placeholder="ID"          
         />
         <span class="error-message">{{ erreurId }}</span>
       </VCol>
-
-      <!-- 👉 Last Name -->
-      <!--<VCol
-        cols="12"
-        md="6"
-      >
-        <VTextField
-          v-model="lastName"
-          label="Last Name"
-          placeholder="Doe"
-        />
-      </VCol>-->
 
       <!-- 👉  -->
       <VCol
@@ -162,7 +150,17 @@ function ajouterEntreprise() {
         />
         <span class="error-message">{{ erreurDescription }}</span>
       </VCol>
-
+ <!-- 👉 file -->
+      <VCol
+        cols="12"
+        md="6"
+      >
+        <VTextField
+        v-model="nouvFile"
+        inputmode="file"
+        type="file"
+        />
+      </VCol>
 
       <VCol
         cols="12"

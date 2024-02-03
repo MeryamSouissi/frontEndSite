@@ -1,65 +1,136 @@
-<script setup lang="ts">
-import { useTheme } from 'vuetify'
-import illustrationJohnDark from '@images/cards/illustration-john-dark.png'
-import illustrationJohnLight from '@images/cards/illustration-john-light.png'
-
-const { global } = useTheme()
-const illustrationJohn = computed(() => global.name.value === 'dark' ? illustrationJohnDark : illustrationJohnLight)
-</script>
-
 <template>
-  <VCard class="text-center text-sm-start">
-    <VRow no-gutters>
-      <VCol
-        cols="12"
-        sm="8"
-        order="2"
-        order-sm="1"
-      >
-        <VCardItem>
-          <VCardTitle class="text-md-h5 text-primary">
-            Congratulations John! 🎉
-          </VCardTitle>
-        </VCardItem>
+  <div class="welcome-container">
+    <h1>Bienvenue dans la Zone Franche : Parc d'Activités Économiques de ZARZIS</h1>
 
-        <VCardText>
-          <span>
-            You have done 72% 🤩 more sales today.
-            <br>
-            Check your new raising badge in your profile.
-          </span>
-          <br>
-          <VBtn
-            variant="tonal"
-            class="mt-4"
-            size="small"
-          >
-            View Badges
-          </VBtn>
-        </VCardText>
-      </VCol>
+    <div class="image-container">
+      <VImg :src="logo" alt="Logo du parc" class="park-image" />
+    </div>
 
-      <VCol
-        cols="12"
-        sm="4"
-        order="1"
-        order-sm="2"
-        class="text-center"
-      >
-        <img
-          :src="illustrationJohn"
-          :height="$vuetify.display.xs ? '150' : '175'"
-          :class="$vuetify.display.xs ? 'mt-6 mb-n2' : 'position-absolute'"
-          class="john-illustration flip-in-rtl"
-        >
-      </VCol>
-    </VRow>
-  </VCard>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1371.3330300322777!2d11.114156854267078!3d33.485897747271586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13aaef258378efc3%3A0x1a2e46f5b9da9ade!2sSi%C3%A8ge%20social%20du%20Parc%20d&#39;Activit%C3%A9s%20Economiques%20de%20Zarzis!5e1!3m2!1sen!2stn!4v1706819721586!5m2!1sen!2stn"
+        width="100%"
+        height="450"
+        style="border: 0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="map-frame"
+      ></iframe>
+    </div>
+
+    <div class="info-container">
+      <div class="info-item">
+        <h2><i class="fa-solid fa-clipboard-check"></i> Date de création</h2>
+        <p>1993</p>
+
+        <h2><i class="fa-solid fa-clipboard-check"></i> Activités</h2>
+        <p>Développement économique et gestion du parc d'activités économiques de Zarzis</p>
+      </div>
+    </div>
+
+    <div class="description-container">
+      <h2><i class="fa-solid fa-clipboard-check"></i> Parc d'Activités Économiques de ZARZIS</h2>
+      <p>
+        Zarzis Business Park, idéalement situé dans le bassin méditerranéen, hautement équipé avec des bureaux meublés,
+        des espaces industriels adaptés aux besoins des investisseurs et soutenus par des procédures d'installation simplifiées.
+      </p>
+    </div>
+  </div>
+  <div>
+    <a href="https://www.investinzarzis.tn/">Plateforme pour effectuer des investissements dans la région.</a>
+  </div>
 </template>
+<script setup></script>
+<style scoped>
+  .welcome-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+  }
 
-<style lang="scss" scoped>
-.john-illustration {
-  inset-block-end: -0.0625rem;
-  inset-inline-end: 3rem;
-}
+  h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .image-container {
+    margin-bottom: 20px;
+  }
+
+  .park-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .map-container {
+    margin-bottom: 20px;
+  }
+
+  .map-frame {
+    border-radius: 8px;
+  }
+
+  .info-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .info-item {
+    flex: 1;
+    text-align: left;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+  }
+
+  h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.5;
+  }
+
+  .description-container {
+    text-align: left;
+  }
+
+  .description-container h2 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+
+  .description-container p {
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.6;
+  }
+  div a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  div a:hover {
+    background-color: #2980b9;
+  }
 </style>

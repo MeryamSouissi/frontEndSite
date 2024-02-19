@@ -79,13 +79,6 @@ const upgradeBanner = computed(() => {
           to: '/Accueil',
         }"
       />
-      <VerticalNavLink
-        :item="{
-          title: 'Paramètres du compte',
-          icon: 'mdi-account-cog-outline',
-          to: '/account-settings',
-        }"
-      />
 
       <!-- 👉 Pages -->
       <VerticalNavSectionTitle
@@ -93,25 +86,12 @@ const upgradeBanner = computed(() => {
           heading: 'Pages',
         }"
       />
-      <VerticalNavLink
-        :item="{
-          title: 'Se connecter',
-          icon: 'bx-log-in',
-          to: '/login',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Registre',
-          icon: 'bx-user-plus',
-          to: '/register',
-        }"
-      />
+
    <VerticalNavLink
         :item="{
           title: 'Gérer Demandes',
           icon: 'bx-info-circle',
-          to: '/GérerDemandes',
+          to: '/GererDemandes',
         }"
       />
 
@@ -123,30 +103,30 @@ const upgradeBanner = computed(() => {
       />-->
       <VerticalNavLink
         :item="{
-          title: 'Demandes Visiteurs',
+          title: 'Mes Demandes',
           icon: 'mdi-alpha-t-box-outline',
-          to: '/typography',
+          to: '/MesDemandes',
         }"
       />
       <VerticalNavLink
         :item="{
-          title: 'Visiteurs',
+          title: 'Table Visiteurs',
           icon: 'bx-show',
-          to: '/icons',
+          to: '/AffichageTableVisiteur',
         }"
       />
       <VerticalNavLink
         :item="{
           title: 'Demande Accès',
           icon: 'bx-credit-card',
-          to: '/cards',
+          to: '/DemandeAcces',
         }"
       />
       <VerticalNavLink
         :item="{
-          title: 'Tables',
+          title: 'Table Entreprises',
           icon: 'bx-table',
-          to: '/tables',
+          to: '/AffichageTableEntreprise',
         }"
       />
    <!--   <VerticalNavLink

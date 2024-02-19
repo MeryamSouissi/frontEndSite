@@ -1,5 +1,5 @@
 <script setup>
-import AffichageDemandePourTraitement from '@/views/pages/Affichages/AffichageDemandePourTraitement.vue'
+import AffichageDemandeVisiteur from '@/views/pages/Affichages/AffichageDemandeVisiteur.vue'
 
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
@@ -10,9 +10,9 @@ import { computed } from 'vue';
     <VRow>
       <VCol>
         <!-- 👉 Multiple Column -->
-        <VCard title="Gérer Les Demandes Des Visiteurs ">
+        <VCard title="Les demandes d'accès des visiteurs">
           <VCardText>
-            <AffichageDemandePourTraitement/>
+            <AffichageDemandeVisiteur />
           </VCardText>
         </VCard>
       </VCol> 

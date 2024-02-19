@@ -1,14 +1,40 @@
-<script setup lang="ts">
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
+<script setup >
 import logo from '@images/logo.svg?raw'
-
-const form = ref({
-  email: '',
-  password: '',
-  remember: false,
-})
-
+import {ref} from 'vue'
+import {useRouter} from 'vue-router'
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const number=ref(0)
 const isPasswordVisible = ref(false)
+const errorLogin = ref('')
+
+
+const erreurEmail = ref("");
+const erreurPassword = ref("");
+function reset()
+{
+  erreurPassword.value = ""
+  erreurEmail.value = ""
+  errorLogin.value = ""
+}
+function Authenticate()
+{
+  reset()
+  if (password.value === "") erreurPassword.value = "Veuillez remplir ce champ !";
+  if (email.value === "") erreurEmail.value = "Veuillez remplir ce champ !";
+  if (!(erreurEmail.value || erreurPassword.value)) {
+
+  fetch("https://localhost:7012/api/Login/"+email.value+"/"+password.value)
+  .then((response) => response.json())
+  .then((data) => (number.value = data))
+  .then(() => {
+        if(number.value==1)   router.push('/') 
+        else {errorLogin.value = "ce compte n'existe pas " }
+    }
+  )
+    }
+}
 </script>
 
 <template>
@@ -34,7 +60,7 @@ const isPasswordVisible = ref(false)
 
       <VCardText class="pt-2">
         <h5 class="text-h5 mb-1">
-          Bienvenue chez Sneat ! 👋🏻
+          Bienvenue chez ZoneFranche ! 👋🏻
         </h5>
         <p class="mb-0">
           Veuillez vous connecter à votre compte et commencer l'aventure
@@ -42,49 +68,44 @@ const isPasswordVisible = ref(false)
       </VCardText>
 
       <VCardText>
-        <VForm @submit.prevent="$router.push('/')">
+        <VForm @submit.prevent="() => {}">
           <VRow>
             <!-- email -->
             <VCol cols="12">
               <VTextField
-                v-model="form.email"
+              v-model="email"
                 autofocus
                 placeholder ="Votre Email"
                 label="Email"
                 type="email"
               />
+              <span class="error-message">{{erreurEmail}}</span>
+
             </VCol>
 
             <!-- password -->
             <VCol cols="12">
               <VTextField
-                v-model="form.password"
+                v-model="password"
                 label="Mot de passe"
-                placeholder="············"
+                placeholder=""
                 :type="isPasswordVisible ? 'text' : 'Mot de passe'"
                 :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
               />
+              <span class="error-message">{{erreurPassword}}</span>
 
               <!-- remember me checkbox -->
               <div class="d-flex align-center justify-space-between flex-wrap mt-1 mb-4">
-                <VCheckbox
-                  v-model="form.remember"
-                  label="Souviens-toi de moi"
-                />
 
-                <RouterLink
-                  class="text-primary ms-2 mb-1"
-                  to="javascript:void(0)"
-                >
-                Mot de passe oublié?
-                </RouterLink>
               </div>
-
               <!-- login button -->
+              <span class="error-message">{{ errorLogin }}</span>
+
               <VBtn
                 block
                 type="submit"
+                @click="Authenticate"
               >
               Se connecter
               </VBtn>
@@ -103,7 +124,6 @@ const isPasswordVisible = ref(false)
               Créer un compte
               </RouterLink>
             </VCol>
-
          <!--   <VCol
               cols="12"
               class="d-flex align-center"
@@ -129,4 +149,8 @@ const isPasswordVisible = ref(false)
 
 <style lang="scss">
 @use "@core/scss/template/pages/page-auth.scss";
+.error-message {
+  color: red;
+  font-size: 12px;
+}
 </style>

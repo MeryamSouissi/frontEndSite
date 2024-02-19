@@ -13,39 +13,45 @@ const router = createRouter({
           component: () => import('../pages/Accueil.vue'),
         },
         {
-          path: 'account-settings',
-  
-
-          component: () => import('../pages/account-settings.vue'),
+          path: 'InformationsEntreprise/:id',
+          props:true,
+          name:'acc',
+          component: () => import('../pages/InformationsEntreprise.vue'),
         },
         {
-          path: 'typography',
-          component: () => import('../pages/typography.vue'),
+          path: 'MesDemandes',
+          component: () => import('../pages/MesDemandes.vue'),
         },
         {
-          path: 'icons',
-          component: () => import('../pages/vide1.vue'),
+          path: 'AffichageTableVisiteur',
+          component: () => import('../pages/AffichageTableVisiteur.vue'),
         },
         {
-          path: 'cards',
-          component: () => import('../pages/vide2.vue'),
+          path: 'DemandeAcces',
+          component: () => import('../pages/DemandeAcces.vue'),
         },
         {
-          path: 'tables',
-          component: () => import('../pages/tables.vue'),
+          path: 'AffichageTableEntreprise',
+          component: () => import('../pages/AffichageTableEntreprise.vue'),
         },
         {
-          path: 'AjouterEntreprise/:type',
+          path: 'LesFormulairesAjout/:type/:id',
+          name: 'addFormEmp',
+          props: true,
+          component: () => import('../pages/LesFormulairesAjout.vue'),
+        },
+        {
+          path: 'LesFormulairesAjout/:type',
           name: 'addForm',
           props: true,
-          component: () => import('../pages/AjouterEntreprise.vue'),
+          component: () => import('../pages/LesFormulairesAjout.vue'),
         },
         {
-          path: 'AjouterEntreprise',
-          component: () => import('../pages/AjouterEntreprise.vue'),
+          path: 'LesFormulairesAjout',
+          component: () => import('../pages/LesFormulairesAjout.vue'),
         },
         {
-          path: 'GérerDemandes',
+          path: 'GererDemandes',
           component: () => import('../pages/GérerDemandes.vue'),
         },
       ],

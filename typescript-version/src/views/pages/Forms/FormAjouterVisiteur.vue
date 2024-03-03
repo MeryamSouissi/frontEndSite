@@ -30,6 +30,7 @@ function ajouterVisiteur() {
       body: JSON.stringify({
         email: nouvEmail.value,
         motDePasse: "null",
+        type: "visiteur"
       }),
     })
       .then(
@@ -52,6 +53,8 @@ function ajouterVisiteur() {
                   "id": data + 1,
                   "email": "string",
                   "motDePasse": "string",
+                  "type": "visiteur"
+
                 }
               }),
             }).then(() => {

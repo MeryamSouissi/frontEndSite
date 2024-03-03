@@ -1,7 +1,7 @@
 <template>
   <div id="main-container">
     <div class="welcome-container">
-      <h1>Bienvenue dans la Zone Franche : Parc d'Activités Économiques de ZARZIS</h1>
+     
   
       <div class="image-container">
         <VImg :src="logo" alt="Logo du parc" class="park-image" />
@@ -9,7 +9,7 @@
   
       <div class="map-container">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1371.3330300322777!2d11.114156854267078!3d33.485897747271586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13aaef258378efc3%3A0x1a2e46f5b9da9ade!2sSi%C3%A8ge%20social%20du%20Parc%20d&#39;Activit%C3%A9s%20Economiques%20de%20Zarzis!5e1!3m2!1sen!2stn!4v1706819721586!5m2!1sen!2stn"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.5991436854138!2d11.11199597615911!3d33.48578574742787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13aaef258378efc3%3A0x1a2e46f5b9da9ade!2sSi%C3%A8ge%20social%20du%20Parc%20d&#39;Activit%C3%A9s%20Economiques%20de%20Zarzis!5e0!3m2!1sen!2stn!4v1708795153249!5m2!1sen!2stn"
           width="100%"
           height="450"
           style="border: 0;"
@@ -49,7 +49,7 @@
     .welcome-container {
       text-align: center;
       padding: 20px;
-      background-color: #f4f4f4;
+      background-color: white;
       margin: 20px auto;
     }
   
@@ -118,7 +118,6 @@
     .description-container p {
       color: #555;
       font-size: 1.1em;
-      line-height: 1.6;
     }
     div a {
       display: inline-block;
@@ -134,8 +133,9 @@
       background-color: #2980b9;
     }
     #main-container {
-  width: 65vw; /* Adjust the width as needed */
-  margin: 0 17.5%; /* Center the container horizontally */
+  
+    margin: 0 17.5%; /* Center the container horizontally */
+      padding-bottom: 100px;
 }
 
   </style>

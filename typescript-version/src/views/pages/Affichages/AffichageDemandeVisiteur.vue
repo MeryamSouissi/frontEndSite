@@ -1,10 +1,7 @@
 <template>
   <VTable>
     <thead>
-      <tr><th class="text-uppercase">ID</th>
-        <th>Nom du Visiteur</th>
-        <th>CIN du Visiteur</th>
-        <th>Email du Visiteur</th>
+      <tr>
         <th>Date d'Entrée</th>
         <th>Raison de la Visite</th>
         <th>Etat</th>
@@ -12,13 +9,10 @@
     </thead>
     <tbody>
             <tr v-for="demande in tableInformationVisiteurs" :key="demande.id">
-              <td>{{ demande.id }}</td>
-                <td>{{ demande.visiteur.nom }}</td>
-                <td>{{ demande.visiteur.cin}}</td>
-                <td>{{ demande.visiteur.login.email }}</td>
-                <td>{{ demande.dateEntree }}</td>
-                <td>{{ demande.raisonViste }}</td>
-                <td >
+
+                <td class="smaller">{{ demande.dateEntree }}</td>
+                <td class="middle">{{ demande.raisonViste }}</td>
+                <td  class="smaller">
                   <div v-if="demande.etat==='Acceptée' || demande.etat === 'Refusée'">
                      <div  :class="{ 'badge-green': demande.etat === 'Acceptée', 'badge-red': demande.etat === 'Refusée' }">              
                         {{ demande.etat }}
@@ -38,6 +32,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import {userLogin} from "../../../utils/global.ts"
 
   const tableInformationVisiteurs = ref([]);
   const router = useRouter();
@@ -46,8 +41,13 @@ import { useRouter } from 'vue-router';
 function loadData() {
   fetch("https://localhost:7012/api/Demande")
     .then(response => response.json())
-    .then(data => tableInformationVisiteurs.value = data)
+    .then(data => {
+      console.log(userLogin.value.id)
+      tableInformationVisiteurs.value = data.filter(item => item.visiteur.login.id == userLogin.value.id)
+      console.log(tableInformationVisiteurs.value)
+    })
     .catch(error => console.error('Error loading data:', error));
+
   }
   onMounted(() => {
   loadData();
@@ -61,34 +61,41 @@ function loadData() {
 .badge-green {
   background-color: #1F9D57; /* Green background color */
   color: #fff; /* White text color */
-  padding: 4px 8px; /* Adjust padding for a smaller size */
+  padding: 4px; /* Adjust padding for a smaller size */
   border-radius: 10px; /* Increased border-radius for a more pill-like shape */
   font-size: 12px; /* Adjust font size */
   text-align: center;
+  width: 200px;
 }
 
 /* Red Badge */
 .badge-red {
   background-color: #E42728; /* Red background color */
   color: #fff; /* White text color */
-  padding: 4px 8px; /* Adjust padding for a smaller size */
+  padding: 4px; /* Adjust padding for a smaller size */
   border-radius: 10px; /* Increased border-radius for a more pill-like shape */
   font-size: 12px; /* Adjust font size */
   text-align: center;
+  width: 200px;
 
 }
 /* Yellow Badge */
 .badge-yellow {
-  white-space: nowrap; /* Prevent line breaks */
-  overflow: hidden; /* Hide any overflowing content */
-  text-overflow: ellipsis; /* Display an ellipsis (...) for overflowing content */
   background-color: #FF8510;
   color: #fff;
-  padding: 4px 20px;
+  padding: 4px;
   border-radius: 10px;
   font-size: 12px;
   text-align: center;
+  width: 200px;
+  position: right;
 }
 
+.smaller{
+  width: 200px;
+}
+.middle{
+  text-align: center;
+}
 
 </style>

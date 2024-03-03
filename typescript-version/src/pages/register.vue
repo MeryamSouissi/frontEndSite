@@ -68,6 +68,7 @@ function ajoutBase() {
       body: JSON.stringify({
         email: nouvEmail.value,
         motDePasse: nouvPassword.value,
+        type: "visiteur"
       }),
     }).then(
        fetch("https://localhost:7012/api/Login/maxId")
@@ -88,6 +89,7 @@ function ajoutBase() {
                 id: data + 1,
                 email: "string",
                 motDePasse: "string",
+                type: "visiteur"
               },
             }),
           }).then(() => {

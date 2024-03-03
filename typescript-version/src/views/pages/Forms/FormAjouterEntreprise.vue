@@ -13,7 +13,12 @@ const erreurHeure = ref('');
 const erreurEmail = ref('');
 const erreurNumeroDirecteur = ref('');
 const erreurDescription = ref('');
+const nouvFile = ref(null)
 
+function onFileSelected(event) {
+
+      nouvFile.value = event.target.files[0];
+}
 function ajouterEntreprise() {
   if (nouvNom.value === '') erreurNom.value = 'Veuillez remplir ce champ !';
   if (nouvHeure.value === '') erreurHeure.value = 'Veuillez remplir ce champ !';
@@ -22,7 +27,9 @@ function ajouterEntreprise() {
   if (nouvDescription.value === '') erreurDescription.value = 'Veuillez remplir ce champ !';
 
   if (!(erreurNom.value || erreurHeure.value || erreurEmail.value || erreurNumeroDirecteur.value || erreurDescription.value)) {
-        fetch("https://localhost:7012/api/Entreprise", {
+        
+
+    fetch("https://localhost:7012/api/Entreprise", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -33,10 +40,16 @@ function ajouterEntreprise() {
             email: nouvEmail.value,
             numeroDirecteur: nouvNumeroDirecteur.value,
             description: nouvDescription.value,
-            path : 'image.jpg'
+            path : nouvNom.value+'.jpg'
           }),
         })
-        .then(() => { router.push({ path: '/AffichageTableEntreprise', forceReload: true }); 
+        .then(() => { 
+          let formData = new FormData();
+          formData.append('file', nouvFile.value);
+          fetch("https://localhost:7012/api/Image/upload/"+nouvNom.value+".jpg", {
+          method: 'POST',
+          body: formData,
+         }).then(() => { router.push({ path: '/AffichageTableEntreprise', forceReload: true })})
       });
       }}
 
@@ -56,7 +69,7 @@ function ajouterEntreprise() {
   erreurDescription.value = '';
 
   // Revenez à la page contenant le tableau
-  router.push({ path: '/tables', forceReload: true });
+  router.push({ path: '/AffichageTableEntreprise', forceReload: true });
 } 
 </script>
 
@@ -138,13 +151,12 @@ function ajouterEntreprise() {
         cols="12"
         md="6"
       >
-        <VTextField
-        v-model="nouvFile"
-        inputmode="file"
-        type="file"
-        />
+      <VTextField
+    inputmode="file"
+    type="file"
+    @change="onFileSelected"
+/>
       </VCol>
-
       <VCol
         cols="12"
         class="d-flex gap-4"

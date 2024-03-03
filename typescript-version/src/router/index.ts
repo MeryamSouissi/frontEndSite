@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import { isLoggedIn } from '../utils/global'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -7,10 +7,13 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('../layouts/default.vue'),
+      meta: { requiresAuth: true },
+
       children: [
         {
           path: 'Accueil',
           component: () => import('../pages/Accueil.vue'),
+          meta: { requiresAuth: true }
         },
         {
           path: 'InformationsEntreprise/:id',
@@ -76,5 +79,16 @@ const router = createRouter({
     },
   ],
 })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isLoggedIn.value) {
+      next({ path: '/login' }); // Redirect to login if not authenticated
+    } else {
+      next(); // Proceed to the route
+    }
+  } else {
+    next(); // No authentication required, proceed to the route
+  }
+});
 
 export default router

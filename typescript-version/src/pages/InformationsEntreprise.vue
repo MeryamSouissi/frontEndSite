@@ -1,20 +1,30 @@
-<script lang="ts" setup>
+<script setup>
+import {ref,onMounted} from'vue'
 import { useRoute } from 'vue-router'
-
+import { userLogin } from "../utils/global";
 import ProfileEntreprise from '@/views/pages/Entreprises/ProfileEntreprise.vue'
 import HistoriqueVisiteur from '@/views/pages/Entreprises/HistoriqueVisiteur.vue'
 import AffichageEmployeeParEntreprise from '@/views/pages/Entreprises/AffichageEmployeeParEntreprise.vue'
 
 const route = useRoute()
-
 const activeTab = ref(route.params.tab)
-
-// tabs
-const tabs = [
+console.log(userLogin)
+const tabs = ref([])
+onMounted(()=>{
+  if (userLogin.value.type == 'admin' || userLogin.value.type == 'gerant'){
+     tabs.value = [
   { title: 'Informations Entreprise', icon: 'bx-user', tab: 'Informations Entreprise' },
   { title: 'Les employees de l entreprise', icon: 'bx-lock-open', tab: 'Employees de l entreprise' },
   { title: 'Historiques des demandes d accès', icon: 'bx-bell', tab: 'Historiques des demandes d accès' },
+  ]
+  }
+  else if(userLogin.value.type == 'visiteur'){
+     tabs.value = [
+  { title: 'Informations Entreprise', icon: 'bx-user', tab: 'Informations Entreprise' },
+  { title: 'Les employees de l entreprise', icon: 'bx-lock-open', tab: 'Employees de l entreprise' },
 ]
+  }
+})
 </script>
 
 <template>
@@ -53,8 +63,10 @@ const tabs = [
       </VWindowItem>
 
       <!-- Notification -->
-      <VWindowItem value="Historiques des demandes d accès">
-        <HistoriqueVisiteur />
+      
+      <VWindowItem v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'" value="Historiques des demandes d accès" >
+        <HistoriqueVisiteur
+         />
       </VWindowItem>
     </VWindow>
   </div>

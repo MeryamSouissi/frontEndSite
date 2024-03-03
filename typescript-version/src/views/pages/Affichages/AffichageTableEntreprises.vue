@@ -1,7 +1,7 @@
 <template>
   <VTable>
     <thead>
-      <div>       
+      <div v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'">       
         <RouterLink :to="{ name: 'addForm', params: { type: 'entreprise' }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Ajouter Entreprise</RouterLink>
         <br><br></div>
       <tr><th class="text-uppercase">ID</th>
@@ -20,9 +20,9 @@
               <td>{{ entreprise.email }}</td>
               <td>{{ entreprise.numeroDirecteur }}</td>
               <td> 
-              <VBtn color="primary" variant="tonal" @click="openModifierPrompt(entreprise)" >  <i class="fa-sharp fa-solid fa-pen-to-square"></i>   </VBtn>
-              <VBtn color="primary" variant="tonal" @click="openDeletePrompt(entreprise.id)"> <i class="fa-solid fa-trash"></i> </VBtn>
-              <VBtn color="primary" variant="tonal"> <RouterLink :to="{ name: 'acc', params: { id: entreprise.id }}" ><i class="fa-solid fa-table-list"></i></RouterLink>   </VBtn>       
+              <VBtn v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'" color="primary" variant="tonal" @click="openModifierPrompt(entreprise)" >  <i class="fa-sharp fa-solid fa-pen-to-square"></i>   </VBtn>
+              <VBtn v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'" color="primary" variant="tonal" @click="openDeletePrompt(entreprise.id)"> <i class="fa-solid fa-trash"></i> </VBtn>
+              <VBtn color="primary" variant="tonal" @click="goToDetails(entreprise.id)"><i class="fa-solid fa-table-list"></i></VBtn>
             </td>
           </tr>
      
@@ -62,7 +62,6 @@
   </div>
 <!-- Prompt for confirming delete -->
 <div v-if="isDeletePromptOpen" class="modifier-prompt">
-  <!-- ... (other input fields) ... -->
   <div>
     <p>Êtes-vous sûr de vouloir supprimer cette entreprise ?</p>
     <VBtn color="primary" variant="tonal" @click="supprimerConfirmed()"> Confirmer </VBtn>
@@ -77,11 +76,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { userLogin } from "../../../utils/global";
 
   const tableEntreprises = ref([]);
   const isModifierPromptOpen = ref(false);
   const entrepriseToModify = ref({});
   const isDeletePromptOpen = ref(false);
+  const router = useRouter();
+
 
   function loadData() {
     fetch("https://localhost:7012/api/Entreprise")
@@ -134,6 +136,10 @@ function openDeletePrompt(entrepriseId) {
 
 function closeDeletePrompt() {
   isDeletePromptOpen.value = false;
+}
+
+function goToDetails(entrepriseId){
+  router.push({ name: 'acc', params: { id: entrepriseId }});
 }
 
 async function supprimerConfirmed() {

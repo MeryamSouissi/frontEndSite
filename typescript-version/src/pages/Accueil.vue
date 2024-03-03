@@ -5,12 +5,18 @@ import Graphe from '@/views/dashboard/Graphe.vue'
 </script>
 
 <template>
-
 <div>
-  <Map />
-</div>
+  <VCard>
+<VCardText>
 
-<div>
+  
+
   <Graphe />
+  <Map />
+
+</VCardText>
+  </VCard>
 </div>
+
+
 </template>

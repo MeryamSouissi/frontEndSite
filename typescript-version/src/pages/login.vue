@@ -2,13 +2,16 @@
 import logo from '@images/logo.svg?raw'
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
+import { isLoggedIn,userLogin } from '../utils/global.ts'
+
+isLoggedIn.value = false
 const router = useRouter()
 const email = ref('')
 const password = ref('')
-const number=ref(0)
+const user =ref({})
 const isPasswordVisible = ref(false)
 const errorLogin = ref('')
-
+ 
 
 const erreurEmail = ref("");
 const erreurPassword = ref("");
@@ -27,9 +30,13 @@ function Authenticate()
 
   fetch("https://localhost:7012/api/Login/"+email.value+"/"+password.value)
   .then((response) => response.json())
-  .then((data) => (number.value = data))
+  .then((data) => (user.value = data))
   .then(() => {
-        if(number.value==1)   router.push('/') 
+        if(user != null){
+          router.push('/') 
+          isLoggedIn.value = true
+          userLogin.value = user.value
+        }
         else {errorLogin.value = "ce compte n'existe pas " }
     }
   )
@@ -54,7 +61,7 @@ function Authenticate()
         </template>
 
         <VCardTitle class="text-2xl font-weight-bold">
-          sneat
+          ZoneFranche
         </VCardTitle>
       </VCardItem>
 
@@ -89,7 +96,7 @@ function Authenticate()
                 v-model="password"
                 label="Mot de passe"
                 placeholder=""
-                :type="isPasswordVisible ? 'text' : 'Mot de passe'"
+                :type="isPasswordVisible ? 'password' : 'text'"
                 :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
               />

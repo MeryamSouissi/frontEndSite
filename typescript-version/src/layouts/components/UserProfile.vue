@@ -1,5 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import personne from '@images/personne.png'
+import { userLogin } from "../../utils/global";
+
 </script>
 
 <template>
@@ -21,7 +23,7 @@ import personne from '@images/personne.png'
       <!-- SECTION Menu -->
       <VMenu
         activator="parent"
-        width="230"
+        width="350"
         location="bottom end"
         offset="14px"
       >
@@ -48,39 +50,13 @@ import personne from '@images/personne.png'
             </template>
 
             <VListItemTitle class="font-weight-semibold">
-              Meryam Souissi
+              {{ userLogin.email }}
             </VListItemTitle>
-            <VListItemSubtitle>administrateur</VListItemSubtitle>
+            <VListItemSubtitle>{{userLogin.type}}</VListItemSubtitle>
           </VListItem>
           <VDivider class="my-2" />
 
-          <!-- 👉 Profile -->
-          <VListItem link>
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="bx-user"
-                size="22"
-              />
-            </template>
-
-            <VListItemTitle>Profile</VListItemTitle>
-          </VListItem>
-
-          <!-- 👉 Settings -->
-          <VListItem link>
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="bx-cog"
-                size="22"
-              />
-            </template>
-
-            <VListItemTitle>paramètres</VListItemTitle>
-          </VListItem>
-          <!-- Divider -->
-          <VDivider class="my-2" />
+            
 
           <!-- 👉 Logout -->
           <VListItem to="/login">

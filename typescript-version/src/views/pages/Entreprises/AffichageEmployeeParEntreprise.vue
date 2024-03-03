@@ -1,7 +1,7 @@
 <template>
    <VTable>
     <thead>
-      <div>
+      <div v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'">
         <RouterLink :to="{ name: 'addFormEmp', params: { type: 'employee',id : id }}"  class="btn btn-primary"><i class="fa-solid fa-plus"></i> Ajouter Employee </RouterLink>        <br><br>
       </div>
       <tr>
@@ -9,21 +9,21 @@
         <th>Nom</th>
         <th>Prenom</th>
         <th>Numero Telephone</th>
-        <th>Numero CIN</th>
+        <th v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'">Numero CIN</th>
         <th>Email</th>
-        <th>Action</th>
+        <th v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'" >Action</th>
       </tr>
     </thead>
     <tbody>
      
-      <tr v-for="employee in tableEmployee" :key="employee.id">
+      <tr v-for="employee in tableEmployee" :key="employee.id" :class="{ 'gerant': employee.login.type === 'gerant'}">
         <td>{{ employee.id }}</td>
         <td>{{ employee.nom }}</td>
         <td>{{ employee.prenom }}</td>
         <td>{{ employee.numTel }}</td>
-        <td>{{ employee.cin }}</td>
+        <td v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'">{{ employee.cin }}</td>
         <td>{{ employee.email }}</td>
-        <td>
+        <td v-if="userLogin.type == 'admin' || userLogin.type == 'gerant'">
           <VBtn color="primary" variant="tonal" @click="openModifierPrompt(employee)">
             <i class="fa-sharp fa-solid fa-pen-to-square"></i>
           </VBtn>
@@ -79,6 +79,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { userLogin } from "../../../utils/global";
 
 const tableEmployee = ref([]);
 const router = useRouter();
@@ -110,6 +111,9 @@ function openModifierPrompt(employee) {
 
 function modifierEmployee() {
   // Update the employee details using employeeToModify
+  fetch("https://localhost:7012/api/Login/maxId")
+          .then(response => response.json())
+          .then(data => {
   fetch("https://localhost:7012/api/Employee/" + employeeToModify.value.id, {
     method: 'PUT',
     headers: {
@@ -121,13 +125,20 @@ function modifierEmployee() {
       prenom: employeeToModify.value.prenom,
       numTel: employeeToModify.value.numTel,
       cin: employeeToModify.value.cin,
-      email: employeeToModify.value.email,
-    }),
+      email:employeeToModify.value.email,
+      idEntreprise:props.id,
+      idLogin: data,
+                login: {
+                  "id": 0,
+                  "email": "string",
+                  "motDePasse": "string",
+                  "type": "string"
+    }}),
   }).then(() => {
     closeModifierPrompt();
-    loadData(); // Reload data after modification
+    loadData(); 
   });
-}
+})};
 function openDeletePrompt(employeeId) {
   // Store the ID of the employee to delete in a variable
   employeeToModify.value.idToDelete = employeeId;
@@ -241,5 +252,8 @@ onMounted(loadData);
   background-color: #2c3e50;
   color: #fff;
   transform: scale(1.05);
+}
+.gerant{
+  background-color: #53535317
 }
 </style>

@@ -99,8 +99,9 @@ function closeModifierPrompt() {
 }
 
 function modifierVisiteur() {
-  alert(visiteurToModify.value);
-  console.log(visiteurToModify.value)
+  fetch("https://localhost:7012/api/Login/maxId")
+          .then(response => response.json())
+          .then(data => {
   fetch("https://localhost:7012/api/Visiteur/" + visiteurToModify.value.id, {
     method: 'PUT',
     headers: {
@@ -112,9 +113,9 @@ function modifierVisiteur() {
       prenom: visiteurToModify.value.prenom,
       numTel: visiteurToModify.value.numTel,
       cin: visiteurToModify.value.cin,
-      loginId: visiteurToModify.value.loginId,
+      idLogin: data,
       login: {
-        "id": visiteurToModify.value.loginId ,
+        "id":0 ,
         "email": "string",
         "motDePasse": "null",
         "type": "string"
@@ -124,7 +125,7 @@ function modifierVisiteur() {
     closeModifierPrompt();
     loadData(); // Reload data after modification
   });
-}
+})}
 
 function openDeletePrompt(visiteurId) {
   visiteurToModify.value.idToDelete = visiteurId;
